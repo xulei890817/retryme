@@ -17,7 +17,6 @@ setup(
     url='',
     license='',
     author='leixu',
-    author_email='leixu@g'
-                 '',
+    author_email='lei.xu@grandhonor.net',
     description=''
 )
