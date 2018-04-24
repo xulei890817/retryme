@@ -4,8 +4,6 @@
 
 '''
  * Create File __init__.py
- * Created by leixu on 2018/4/23
+ * Created by leixu on 2018/4/24
  * IDE PyCharm
 '''
-
-__version__ = '0.0.1'
