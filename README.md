@@ -14,9 +14,9 @@ v0.0.1
 
 ## Examples
 
-'''python
+```python
 from RetryMe.retryme import error_retry, SLEEPRULE
-'''
+```
 
 normal usage,retry 2 times if any exception happend,also can be used for coroutine(async/await).
 ```python
