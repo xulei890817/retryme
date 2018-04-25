@@ -1,4 +1,5 @@
 from setuptools import setup
+from setuptools import setup, find_packages, __version__ as setuptools_version
 import RetryMe
 
 version = RetryMe.__version__
@@ -11,12 +12,20 @@ def readme():
 
 
 setup(
-    name='AutoRetry',
+    name='RetryMe',
     version=version,
     packages=['RetryMe'],
-    url='',
+    url=url,
     license='',
     author='leixu',
     author_email='lei.xu@grandhonor.net',
-    description=''
+    classifiers=[
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+    ],
+    python_requires='>=3.5',
+    install_requires=[
+
+    ],
+    description='An easy way to retry your code.'
 )
