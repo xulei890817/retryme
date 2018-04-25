@@ -16,6 +16,7 @@ v0.0.1
 
 ## Examples
 
+#### Error retry
 ```python
 from RetryMe.retryme import error_retry, SLEEPRULE
 ```
@@ -73,7 +74,14 @@ def test_sleep_increase_pro_rule_error():
     raise TestError("Error")
 ```
 
-use result retry
+
+#### Result retry
+```python
+from RetryMe.retryme import result_retry
+```
+
+
+use 
 ```python
 
 @result_retry(expect_results=[None], retry_times=2, sleep_seconds=3)
