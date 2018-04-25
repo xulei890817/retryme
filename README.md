@@ -71,4 +71,31 @@ def test_sleep_increase_pro_rule_error():
     raise TestError("Error")
 ```
 
+use result retry
+```python
+
+@result_retry(expect_results=[None], retry_times=2, sleep_seconds=3)
+def test_expect_results():
+    print("expect_results")
+    print(arrow.get())
+    return None
+
+
+@result_retry(unexpect_results=[None], retry_times=2, sleep_seconds=3)
+def test_unexpect_results():
+    print("unexpect_results")
+    print(arrow.get())
+    return None
+
+```
+
+use both
+```python 
+@error_retry(retry_times=10, sleep_seconds=2, sleep_rule=SLEEPRULE.INCREASEPRO, sleep_rule_args={"max_sleep_time": 60})
+@result_retry(unexpect_results=[None], retry_times=2, sleep_seconds=3)
+def test_unexpect_results_and_retry():
+    print("unexpect_results")
+    print(arrow.get())
+    return None
+```
 
