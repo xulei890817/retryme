@@ -8,6 +8,8 @@ An easy deractor python lib for autoretry.
 * backoff
 
 ## Change Log
+v0.0.2
+* add result_retry
 
 v0.0.1
 * initial code.
