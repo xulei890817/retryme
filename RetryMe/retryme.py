@@ -50,7 +50,7 @@ class SLEEPRULE(Enum):
 
     @classmethod
     def _normal_gen(cls, sleep_seconds, retry_times):
-        return [sleep_seconds for _ in range(retry_times)]
+        return [sleep_seconds for _ in range(retry_times + 1)]
 
     @classmethod
     def _increase_gen(cls, sleep_seconds, retry_times, step=1, **kwargs):

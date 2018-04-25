@@ -8,7 +8,7 @@
  * IDE PyCharm
 '''
 
-from RetryMe.retryme import result_retry, SLEEPRULE
+from RetryMe.retryme import result_retry, error_retry, SLEEPRULE
 import arrow
 
 
@@ -26,6 +26,13 @@ def test_unexpect_results():
     return None
 
 
+@error_retry(retry_times=10, sleep_seconds=2, sleep_rule=SLEEPRULE.INCREASEPRO, sleep_rule_args={"max_sleep_time": 60})
+@result_retry(unexpect_results=[None], retry_times=2, sleep_seconds=3)
+def test_unexpect_results_and_retry():
+    print("unexpect_results")
+    print(arrow.get())
+    return None
+
+
 if __name__ == "__main__":
-    test_expect_results()
-    test_unexpect_results()
+    test_unexpect_results_and_retry()
