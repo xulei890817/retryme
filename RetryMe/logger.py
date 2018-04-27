@@ -13,5 +13,9 @@ import sys
 
 import logging
 
-logging.basicConfig(level=logging.WARNING, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+#
 logger = logging.getLogger(__name__)
+formatter = logging.Formatter('%(asctime)s %(module)s %(lineno)d %(levelname)-8s: %(message)s')
+console_handler = logging.StreamHandler(sys.stdout)
+console_handler.formatter = formatter  # 也可以直接给formatter赋值
+console_handler.setLevel(logging.DEBUG)
