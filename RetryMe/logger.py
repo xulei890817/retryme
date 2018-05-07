@@ -12,6 +12,7 @@ import logging
 import sys
 
 import logging
+
 logger = logging.getLogger("RetryMe")
 
 formatter = logging.Formatter('%(asctime)s %(module)s %(lineno)d %(levelname)-8s: %(message)s')
