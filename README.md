@@ -3,7 +3,9 @@ An easy deractor python lib for autoretry.
 >Only support python 3.5 and 3.6
 ## install
 > pip install git+https://github.com/xulei890817/retryme.git
+
 or
+
 > pip install RetryMe
 
 ## TodoList
