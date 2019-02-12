@@ -4,6 +4,10 @@ An easy deractor python lib for autoretry.
 ## install
 > pip install git+https://github.com/xulei890817/retryme.git
 
+or
+
+> pip install RetryMe
+
 ## TodoList
 * backoff
 
