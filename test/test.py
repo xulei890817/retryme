@@ -54,7 +54,7 @@ def test_sleep_increase_rule_error():
     raise TestError("Error")
 
 
-@error_retry(exceptions=[Exception], retry_times=10, sleep_seconds=2, sleep_rule=SLEEPRULE.INCREASEPRO, sleep_rule_args={"max_sleep_time": 60})
+@error_retry(exceptions=[Exception], retry_times=3, sleep_seconds=1, sleep_rule=SLEEPRULE.INCREASEPRO, sleep_rule_args={"max_sleep_time": 1})
 def test_sleep_increase_pro_rule_error():
     print(arrow.get())
     raise TestError("Error")

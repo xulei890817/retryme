@@ -7,7 +7,7 @@ url = "https://github.com/xulei890817/retryme"
 
 
 def readme():
-    with open("README.rst", "r") as infile:
+    with open("README.md", "r") as infile:
         return infile.read()
 
 

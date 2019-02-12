@@ -76,12 +76,14 @@ class SLEEPRULE(Enum):
 
 def _gen_sleep_time_list(sleep_rule, sleep_seconds, retry_times, sleep_rule_args):
     if sleep_rule:
+        # 如果是无限次，则按规则生成前100个
+        if retry_times == -1:
+            retry_times = 100
         if isinstance(sleep_rule, SLEEPRULE):
             sleep_seconds_list = {
                 SLEEPRULE.NORMAL: SLEEPRULE._normal_gen,
                 SLEEPRULE.INCREASE: SLEEPRULE._increase_gen,
                 SLEEPRULE.INCREASEPRO: SLEEPRULE._increase_pro_gen
-
             }[sleep_rule](sleep_seconds, retry_times, **sleep_rule_args)
     else:
         sleep_seconds_list = SLEEPRULE._normal_gen(sleep_seconds, retry_times)
@@ -107,28 +109,36 @@ def error_retry(exceptions=None, sleep_seconds=1, retry_times=1, sleep_rule=SLEE
             result_flag = False
             _error = None
             result = _result_check_flag
-            for i in range(total_times):
-                retry_flag = False
-                if result_flag:
-                    break
-                try:
-                    result = await func(*args, **kwargs)
-                    result_flag = True
-                except Exception as e:
-                    _error = e
-                    if any_error_flag:
-                        await asyncio.sleep(sleep_seconds_list[i])
-                        continue
-                    else:
-                        for error in exceptions:
-                            if isinstance(e, error):
-                                await asyncio.sleep(sleep_seconds_list[i])
-                                logger.debug("exception catch ,auto retry")
-                                retry_flag = True
-                                break
-                    if retry_flag:
-                        continue
-                    raise e
+            _counter = -1
+            while True:
+                _counter += 1
+                if _counter < total_times or retry_times == -1:
+                    sleep_time = sleep_seconds_list[_counter] if _counter < len(sleep_seconds_list) else sleep_seconds_list[-1]
+                    retry_flag = False
+                    if result_flag:
+                        break
+                    try:
+                        result = await func(*args, **kwargs)
+                        result_flag = True
+                    except Exception as e:
+                        _error = e
+                        if _counter == total_times - 1:
+                            raise _error
+                        if any_error_flag:
+                            await asyncio.sleep(sleep_time)
+                            continue
+                        else:
+                            for error in exceptions:
+                                if isinstance(e, error):
+                                    await asyncio.sleep(sleep_time)
+                                    logger.debug("exception catch ,auto retry")
+                                    retry_flag = True
+                                    break
+                        if retry_flag:
+                            continue
+                        raise e
+                else:
+                    raise _error
             if result == _result_check_flag:
                 raise _error
             else:
@@ -143,28 +153,36 @@ def error_retry(exceptions=None, sleep_seconds=1, retry_times=1, sleep_rule=SLEE
             result_flag = False
             _error = None
             result = _result_check_flag
-            for i in range(total_times):
-                retry_flag = False
-                if result_flag:
-                    break
-                try:
-                    result = func(*args, **kwargs)
-                    result_flag = True
-                except Exception as e:
-                    _error = e
-                    if any_error_flag:
-                        time.sleep(sleep_seconds_list[i])
-                        continue
-                    else:
-                        for error in exceptions:
-                            if isinstance(e, error):
-                                time.sleep(sleep_seconds_list[i])
-                                logger.debug("exception catch ,auto retry")
-                                retry_flag = True
-                                break
-                    if retry_flag:
-                        continue
-                    raise e
+            _counter = -1
+            while True:
+                _counter += 1
+                if _counter < total_times or retry_times == -1:
+                    sleep_time = sleep_seconds_list[_counter] if _counter < len(sleep_seconds_list) else sleep_seconds_list[-1]
+                    retry_flag = False
+                    if result_flag:
+                        break
+                    try:
+                        result = func(*args, **kwargs)
+                        result_flag = True
+                    except Exception as e:
+                        _error = e
+                        if _counter == total_times - 1:
+                            raise _error
+                        if any_error_flag:
+                            time.sleep(sleep_time)
+                            continue
+                        else:
+                            for error in exceptions:
+                                if isinstance(e, error):
+                                    time.sleep(sleep_time)
+                                    logger.debug("exception catch ,auto retry")
+                                    retry_flag = True
+                                    break
+                        if retry_flag:
+                            continue
+                        raise e
+                else:
+                    raise _error
             if result == _result_check_flag:
                 raise _error
             else:
