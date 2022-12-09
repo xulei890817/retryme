@@ -16,7 +16,6 @@ setup(
     version=version,
     packages=['RetryMe'],
     url=url,
-    license='',
     author='leixu',
     author_email='lei.xu@grandhonor.net',
     classifiers=[
@@ -27,5 +26,9 @@ setup(
     install_requires=[
 
     ],
-    description='An easy way to retry your code.'
+    keywords='retry retryme retrymethod',
+    description='An easy way to retry your code.',
+    long_description=readme(),
+    long_description_content_type='text/markdown',
+    license="MIT Licence"
 )
